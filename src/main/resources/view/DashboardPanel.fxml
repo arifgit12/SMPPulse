@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.smppulse.ui.controller.DashboardController"
+            fitToWidth="true">
+    <VBox spacing="12">
+        <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+
+        <!-- Export Toolbar -->
+        <HBox spacing="8" alignment="CENTER_RIGHT">
+            <Button text="Export CSV" styleClass="button" onAction="#handleExportCsv"/>
+            <Button text="Export JSON" styleClass="button" onAction="#handleExportJson"/>
+            <Button text="Export HTML Report" styleClass="button,primary" onAction="#handleExportHtml"/>
+        </HBox>
+
+        <!-- Counter Tiles Row -->
+        <HBox spacing="10" alignment="CENTER">
+            <VBox fx:id="submittedTile" styleClass="counter-tile" alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS">
+                <Label fx:id="submittedValue" text="0" styleClass="value-label"/>
+                <Label text="Submitted" styleClass="name-label"/>
+            </VBox>
+            <VBox fx:id="successTile" styleClass="counter-tile" alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS">
+                <Label fx:id="successValue" text="0" styleClass="value-label" style="-fx-text-fill: #059669;"/>
+                <Label text="Success" styleClass="name-label"/>
+            </VBox>
+            <VBox fx:id="failedTile" styleClass="counter-tile" alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS">
+                <Label fx:id="failedValue" text="0" styleClass="value-label" style="-fx-text-fill: #dc2626;"/>
+                <Label text="Failed" styleClass="name-label"/>
+            </VBox>
+            <VBox fx:id="throttledTile" styleClass="counter-tile" alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS">
+                <Label fx:id="throttledValue" text="0" styleClass="value-label" style="-fx-text-fill: #d97706;"/>
+                <Label text="Throttled" styleClass="name-label"/>
+            </VBox>
+        </HBox>
+
+        <!-- TPS & Latency Row -->
+        <HBox spacing="10" alignment="CENTER">
+            <VBox fx:id="currentTpsTile" styleClass="counter-tile" alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS">
+                <Label fx:id="currentTpsValue" text="0" styleClass="value-label" style="-fx-text-fill: #7c3aed;"/>
+                <Label text="Current TPS" styleClass="name-label"/>
+            </VBox>
+            <VBox fx:id="avgTpsTile" styleClass="counter-tile" alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS">
+                <Label fx:id="avgTpsValue" text="0" styleClass="value-label" style="-fx-text-fill: #7c3aed;"/>
+                <Label text="Avg TPS" styleClass="name-label"/>
+            </VBox>
+            <VBox fx:id="peakTpsTile" styleClass="counter-tile" alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS">
+                <Label fx:id="peakTpsValue" text="0" styleClass="value-label" style="-fx-text-fill: #7c3aed;"/>
+                <Label text="Peak TPS" styleClass="name-label"/>
+            </VBox>
+            <VBox fx:id="successRateTile" styleClass="counter-tile" alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS">
+                <Label fx:id="successRateValue" text="0%" styleClass="value-label"/>
+                <Label text="Success Rate" styleClass="name-label"/>
+            </VBox>
+        </HBox>
+
+        <!-- TPS Line Chart -->
+        <Label text="Throughput (TPS)" styleClass="section-header"/>
+        <LineChart fx:id="tpsChart" prefHeight="200" createSymbols="false" animated="false">
+            <xAxis><NumberAxis fx:id="tpsXAxis" label="Time (s)" autoRanging="false"
+                               lowerBound="0" upperBound="60" tickUnit="10"/></xAxis>
+            <yAxis><NumberAxis fx:id="tpsYAxis" label="TPS" autoRanging="true"/></yAxis>
+        </LineChart>
+
+        <!-- Latency Section -->
+        <Label text="Latency Percentiles" styleClass="section-header"/>
+        <HBox spacing="10" alignment="CENTER">
+            <VBox styleClass="counter-tile" alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS">
+                <Label fx:id="p50Value" text="0 ms" styleClass="value-label" style="-fx-font-size: 18px;"/>
+                <Label text="P50" styleClass="name-label"/>
+            </VBox>
+            <VBox styleClass="counter-tile" alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS">
+                <Label fx:id="p95Value" text="0 ms" styleClass="value-label" style="-fx-font-size: 18px; -fx-text-fill: #d97706;"/>
+                <Label text="P95" styleClass="name-label"/>
+            </VBox>
+            <VBox styleClass="counter-tile" alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS">
+                <Label fx:id="p99Value" text="0 ms" styleClass="value-label" style="-fx-font-size: 18px; -fx-text-fill: #dc2626;"/>
+                <Label text="P99" styleClass="name-label"/>
+            </VBox>
+            <VBox styleClass="counter-tile" alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS">
+                <Label fx:id="avgLatencyValue" text="0 ms" styleClass="value-label" style="-fx-font-size: 18px;"/>
+                <Label text="Avg" styleClass="name-label"/>
+            </VBox>
+            <VBox styleClass="counter-tile" alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS">
+                <Label fx:id="minLatencyValue" text="0 ms" styleClass="value-label" style="-fx-font-size: 18px;"/>
+                <Label text="Min" styleClass="name-label"/>
+            </VBox>
+            <VBox styleClass="counter-tile" alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS">
+                <Label fx:id="maxLatencyValue" text="0 ms" styleClass="value-label" style="-fx-font-size: 18px;"/>
+                <Label text="Max" styleClass="name-label"/>
+            </VBox>
+        </HBox>
+
+        <!-- Success/Failure Pie Chart -->
+        <Label text="Result Distribution" styleClass="section-header"/>
+        <PieChart fx:id="resultPieChart" prefHeight="200" labelsVisible="true" animated="false"/>
+    </VBox>
+</ScrollPane>

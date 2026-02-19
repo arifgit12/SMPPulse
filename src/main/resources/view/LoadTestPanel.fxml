@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.smppulse.ui.controller.LoadTestController"
+            fitToWidth="true">
+    <VBox spacing="12">
+        <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+
+        <!-- Rate Configuration -->
+        <Label text="Rate Configuration" styleClass="section-header"/>
+        <GridPane hgap="10" vgap="8">
+            <columnConstraints>
+                <ColumnConstraints minWidth="130" prefWidth="130"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+
+            <Label text="Target TPS:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <Spinner fx:id="targetTpsSpinner" min="1" max="100000" initialValue="100"
+                     editable="true" prefWidth="150"
+                     GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Ramp-Up (sec):" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <Spinner fx:id="rampUpSpinner" min="0" max="3600" initialValue="0"
+                     editable="true" prefWidth="150"
+                     GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="Ramp-Down (sec):" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <Spinner fx:id="rampDownSpinner" min="0" max="3600" initialValue="0"
+                     editable="true" prefWidth="150"
+                     GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        </GridPane>
+
+        <Separator/>
+
+        <!-- Duration / Count -->
+        <Label text="Test Limits" styleClass="section-header"/>
+        <GridPane hgap="10" vgap="8">
+            <columnConstraints>
+                <ColumnConstraints minWidth="130" prefWidth="130"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+
+            <Label text="Duration (sec):" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <Spinner fx:id="durationSpinner" min="0" max="86400" initialValue="60"
+                     editable="true" prefWidth="150"
+                     GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Total Messages:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <Spinner fx:id="totalMessagesSpinner" min="0" max="10000000" initialValue="0"
+                     editable="true" prefWidth="150"
+                     GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="" styleClass="label" GridPane.rowIndex="2" GridPane.columnIndex="0"
+                   GridPane.columnSpan="2">
+            </Label>
+            <Label fx:id="limitHintLabel" text="(0 = use duration limit instead)" style="-fx-text-fill: #888898; -fx-font-size: 11px;"
+                   GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+        </GridPane>
+
+        <Separator/>
+
+        <!-- Operation Settings -->
+        <Label text="Operation Settings" styleClass="section-header"/>
+        <GridPane hgap="10" vgap="8">
+            <columnConstraints>
+                <ColumnConstraints minWidth="130" prefWidth="130"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+
+            <Label text="Operation:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="operationCombo" prefWidth="200"
+                      GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Service Type:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextField fx:id="serviceTypeField" promptText="Optional"
+                       GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="Data Coding:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <Spinner fx:id="dataCodingSpinner" min="0" max="255" initialValue="0"
+                     editable="true" prefWidth="100"
+                     GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <Label text="Protocol ID:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <Spinner fx:id="protocolIdSpinner" min="0" max="255" initialValue="0"
+                     editable="true" prefWidth="100"
+                     GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+            <Label text="Priority Flag:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <Spinner fx:id="priorityFlagSpinner" min="0" max="3" initialValue="0"
+                     editable="true" prefWidth="100"
+                     GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+            <Label text="Max In-Flight:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <Spinner fx:id="maxInFlightSpinner" min="1" max="100000" initialValue="1000"
+                     editable="true" prefWidth="150"
+                     GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+        </GridPane>
+
+        <Separator/>
+
+        <!-- Control Buttons -->
+        <HBox spacing="10" alignment="CENTER">
+            <Button fx:id="startButton" text="Start Test" styleClass="button,success"
+                    onAction="#handleStart" prefWidth="120"/>
+            <Button fx:id="pauseButton" text="Pause" styleClass="button"
+                    onAction="#handlePause" prefWidth="100" disable="true"/>
+            <Button fx:id="stopButton" text="Stop" styleClass="button,danger"
+                    onAction="#handleStop" prefWidth="100" disable="true"/>
+        </HBox>
+    </VBox>
+</ScrollPane>

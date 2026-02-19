@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.smppulse.ui.controller.ConnectionController"
+            fitToWidth="true">
+    <VBox spacing="12">
+        <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+
+        <!-- Connection Mode -->
+        <Label text="Connection Mode" styleClass="section-header"/>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <RadioButton fx:id="esmeModeRadio" text="ESME (Connect to SMSC)" selected="true">
+                <toggleGroup><ToggleGroup fx:id="modeGroup"/></toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="smscModeRadio" text="SMSC Simulator" toggleGroup="$modeGroup"/>
+        </HBox>
+
+        <Separator/>
+
+        <!-- Server Settings -->
+        <Label text="Server Settings" styleClass="section-header"/>
+        <GridPane hgap="10" vgap="8">
+            <columnConstraints>
+                <ColumnConstraints minWidth="120" prefWidth="120"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+
+            <Label text="Host:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="hostField" text="localhost" promptText="SMSC hostname or IP"
+                       GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Port:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextField fx:id="portField" text="2775" promptText="SMSC port"
+                       GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="System ID:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <TextField fx:id="systemIdField" text="smppclient" promptText="System ID"
+                       GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <Label text="Password:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <PasswordField fx:id="passwordField" text="password" promptText="Password"
+                           GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+            <Label text="System Type:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <TextField fx:id="systemTypeField" promptText="Optional"
+                       GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+            <Label text="Bind Type:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="bindTypeCombo" prefWidth="200"
+                      GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+        </GridPane>
+
+        <Separator/>
+
+        <!-- Address Settings -->
+        <Label text="Address Settings" styleClass="section-header"/>
+        <GridPane hgap="10" vgap="8">
+            <columnConstraints>
+                <ColumnConstraints minWidth="120" prefWidth="120"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+
+            <Label text="Source TON:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="sourceTonCombo" prefWidth="200"
+                      GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Source NPI:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="sourceNpiCombo" prefWidth="200"
+                      GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="Dest TON:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="destTonCombo" prefWidth="200"
+                      GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <Label text="Dest NPI:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="destNpiCombo" prefWidth="200"
+                      GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+        </GridPane>
+
+        <Separator/>
+
+        <!-- Session Settings -->
+        <Label text="Session Settings" styleClass="section-header"/>
+        <GridPane hgap="10" vgap="8">
+            <columnConstraints>
+                <ColumnConstraints minWidth="120" prefWidth="120"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+
+            <Label text="Sessions:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <Spinner fx:id="sessionCountSpinner" min="1" max="100" initialValue="1"
+                     editable="true" prefWidth="100"
+                     GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Window Size:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <Spinner fx:id="windowSizeSpinner" min="1" max="1000" initialValue="10"
+                     editable="true" prefWidth="100"
+                     GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="Enquire Link (ms):" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <TextField fx:id="enquireLinkField" text="30000"
+                       GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <Label text="Response Timeout (ms):" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <TextField fx:id="responseTimeoutField" text="10000"
+                       GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+            <Label text="Use TLS:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <CheckBox fx:id="useTlsCheck" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+            <Label text="Auto Reconnect:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <CheckBox fx:id="autoReconnectCheck" selected="true"
+                      GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+        </GridPane>
+
+        <Separator/>
+
+        <!-- Connect Button -->
+        <HBox spacing="10" alignment="CENTER">
+            <Button fx:id="connectButton" text="Connect" styleClass="button,primary"
+                    onAction="#handleConnect" prefWidth="120"/>
+            <Button fx:id="disconnectButton" text="Disconnect" styleClass="button,danger"
+                    onAction="#handleDisconnect" prefWidth="120" disable="true"/>
+        </HBox>
+    </VBox>
+</ScrollPane>

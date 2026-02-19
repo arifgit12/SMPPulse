@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.smppulse.ui.controller.MainController"
+            prefWidth="1280" prefHeight="800">
+
+    <!-- Top Menu Bar -->
+    <top>
+        <VBox>
+            <MenuBar>
+                <Menu text="File">
+                    <MenuItem text="Load Profile..." onAction="#handleLoadProfile" accelerator="Ctrl+O"/>
+                    <MenuItem text="Save Profile..." onAction="#handleSaveProfile" accelerator="Ctrl+S"/>
+                    <SeparatorMenuItem/>
+                    <MenuItem text="Export Results (CSV)..." onAction="#handleExportCsv"/>
+                    <MenuItem text="Export Results (JSON)..." onAction="#handleExportJson"/>
+                    <MenuItem text="Export Results (HTML)..." onAction="#handleExportHtml"/>
+                    <SeparatorMenuItem/>
+                    <MenuItem text="Exit" onAction="#handleExit" accelerator="Alt+F4"/>
+                </Menu>
+                <Menu text="Test">
+                    <MenuItem fx:id="startMenuItem" text="Start" onAction="#handleStartTest" accelerator="F5"/>
+                    <MenuItem fx:id="pauseMenuItem" text="Pause" onAction="#handlePauseTest" accelerator="F6" disable="true"/>
+                    <MenuItem fx:id="stopMenuItem" text="Stop" onAction="#handleStopTest" accelerator="F7" disable="true"/>
+                    <SeparatorMenuItem/>
+                    <MenuItem text="Reset Metrics" onAction="#handleResetMetrics"/>
+                </Menu>
+                <Menu text="Help">
+                    <MenuItem text="About SMPPulse" onAction="#handleAbout"/>
+                </Menu>
+            </MenuBar>
+        </VBox>
+    </top>
+
+    <!-- Main Content: Split Pane -->
+    <center>
+        <SplitPane fx:id="mainSplitPane" dividerPositions="0.4">
+            <!-- Left: Config Panels -->
+            <TabPane fx:id="configTabPane" tabClosingPolicy="UNAVAILABLE" side="TOP">
+                <Tab text="Connection">
+                    <fx:include source="ConnectionPanel.fxml" fx:id="connectionPanel"/>
+                </Tab>
+                <Tab text="Load Test">
+                    <fx:include source="LoadTestPanel.fxml" fx:id="loadTestPanel"/>
+                </Tab>
+                <Tab text="DLR">
+                    <fx:include source="DlrPanel.fxml" fx:id="dlrPanel"/>
+                </Tab>
+                <Tab text="Template">
+                    <fx:include source="TemplatePanel.fxml" fx:id="templatePanel"/>
+                </Tab>
+            </TabPane>
+
+            <!-- Right: Dashboard & Logs -->
+            <TabPane fx:id="monitorTabPane" tabClosingPolicy="UNAVAILABLE" side="TOP">
+                <Tab text="Dashboard">
+                    <fx:include source="DashboardPanel.fxml" fx:id="dashboardPanel"/>
+                </Tab>
+                <Tab text="Message Log">
+                    <fx:include source="MessageLogPanel.fxml" fx:id="messageLogPanel"/>
+                </Tab>
+            </TabPane>
+        </SplitPane>
+    </center>
+
+    <!-- Bottom: Status Bar -->
+    <bottom>
+        <HBox fx:id="statusBar" styleClass="status-bar" alignment="CENTER_LEFT" spacing="20">
+            <padding><Insets top="4" right="10" bottom="4" left="10"/></padding>
+            <HBox alignment="CENTER_LEFT" spacing="6">
+                <Region fx:id="connectionIndicator" styleClass="status-indicator,disconnected"
+                        prefWidth="12" prefHeight="12" minWidth="12" minHeight="12" maxWidth="12" maxHeight="12"/>
+                <Label fx:id="connectionStatusLabel" text="Disconnected" styleClass="label"/>
+            </HBox>
+            <Separator orientation="VERTICAL"/>
+            <Label fx:id="tpsLabel" text="TPS: 0" styleClass="label"/>
+            <Separator orientation="VERTICAL"/>
+            <HBox alignment="CENTER_LEFT" spacing="6" HBox.hgrow="ALWAYS">
+                <Label text="Progress:" styleClass="label"/>
+                <ProgressBar fx:id="progressBar" progress="0" prefWidth="200"/>
+                <Label fx:id="progressLabel" text="0%" styleClass="label"/>
+            </HBox>
+            <Separator orientation="VERTICAL"/>
+            <Label fx:id="elapsedLabel" text="00:00:00" styleClass="label"/>
+        </HBox>
+    </bottom>
+</BorderPane>

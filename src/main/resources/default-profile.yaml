@@ -1,0 +1,54 @@
+name: Default Profile
+description: Default SMPPulse load test profile
+connection:
+  host: localhost
+  port: 2775
+  systemId: smppclient
+  password: password
+  systemType: ''
+  bindType: TRANSCEIVER
+  connectionMode: ESME
+  sourceAddrTon: 1
+  sourceAddrNpi: 1
+  destAddrTon: 1
+  destAddrNpi: 1
+  windowSize: 10
+  useTls: false
+  enquireLinkInterval: 30000
+  responseTimeout: 10000
+  sessionCount: 1
+  smscPort: 2775
+  retryPolicy:
+    autoReconnect: true
+    initialDelayMs: 1000
+    maxDelayMs: 60000
+    backoffMultiplier: 2.0
+    maxRetries: -1
+loadTest:
+  targetTps: 100
+  rampUpSeconds: 0
+  rampDownSeconds: 0
+  durationSeconds: 60
+  totalMessages: 0
+  operationType: SUBMIT_SM
+  maxInFlight: 1000
+  dataCoding0: true
+  dataCodingValue: 0
+  maxMessageLength: 160
+  serviceType: ''
+  protocolId: 0
+  priorityFlag: 0
+  validityPeriod: ''
+dlr:
+  requestDlr: false
+  registeredDelivery: 1
+  dlrTimeoutSeconds: 60
+  generateDlr: true
+  dlrDelayMs: 1000
+  dlrSuccessRate: 0.95
+  dlrFormat: 'id:%s sub:001 dlvrd:001 submit date:%s done date:%s stat:%s err:000 text:'
+messageTemplate:
+  sourceAddress: '${random.digits(10)}'
+  destinationAddress: '${random.digits(10)}'
+  messageText: 'Test message ${sequence} at ${timestamp}'
+  tlvValues: {}

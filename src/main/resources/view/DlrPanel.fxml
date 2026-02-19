@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.smppulse.ui.controller.DlrController"
+            fitToWidth="true">
+    <VBox spacing="12">
+        <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+
+        <!-- ESME Mode DLR Settings -->
+        <Label text="ESME Mode - DLR Request" styleClass="section-header"/>
+        <GridPane hgap="10" vgap="8">
+            <columnConstraints>
+                <ColumnConstraints minWidth="140" prefWidth="140"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+
+            <Label text="Request DLR:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <CheckBox fx:id="requestDlrCheck" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Registered Delivery:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="registeredDeliveryCombo" prefWidth="250"
+                      GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="DLR Timeout (sec):" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <Spinner fx:id="dlrTimeoutSpinner" min="1" max="3600" initialValue="60"
+                     editable="true" prefWidth="100"
+                     GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        </GridPane>
+
+        <Separator/>
+
+        <!-- SMSC Mode DLR Settings -->
+        <Label text="SMSC Mode - DLR Generation" styleClass="section-header"/>
+        <GridPane hgap="10" vgap="8">
+            <columnConstraints>
+                <ColumnConstraints minWidth="140" prefWidth="140"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+
+            <Label text="Generate DLR:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <CheckBox fx:id="generateDlrCheck" selected="true"
+                      GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="DLR Delay (ms):" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <Spinner fx:id="dlrDelaySpinner" min="0" max="300000" initialValue="1000"
+                     editable="true" prefWidth="150"
+                     GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="Success Rate:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <HBox spacing="8" alignment="CENTER_LEFT"
+                  GridPane.rowIndex="2" GridPane.columnIndex="1">
+                <Slider fx:id="successRateSlider" min="0" max="1" value="0.95"
+                        showTickMarks="true" showTickLabels="true" majorTickUnit="0.25"
+                        prefWidth="200"/>
+                <Label fx:id="successRateLabel" text="95%"/>
+            </HBox>
+
+            <Label text="DLR Format:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <TextArea fx:id="dlrFormatArea" prefRowCount="2" wrapText="true"
+                      text="id:%s sub:001 dlvrd:001 submit date:%s done date:%s stat:%s err:000 text:"
+                      GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+        </GridPane>
+
+        <Separator/>
+
+        <!-- DLR Stats -->
+        <Label text="DLR Statistics" styleClass="section-header"/>
+        <GridPane hgap="10" vgap="4">
+            <columnConstraints>
+                <ColumnConstraints minWidth="120" prefWidth="120"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+
+            <Label text="Received:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <Label fx:id="dlrReceivedLabel" text="0" style="-fx-font-weight: bold;"
+                   GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Pending:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <Label fx:id="dlrPendingLabel" text="0" style="-fx-font-weight: bold; -fx-text-fill: #d97706;"
+                   GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="Timed Out:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <Label fx:id="dlrTimedOutLabel" text="0" style="-fx-font-weight: bold; -fx-text-fill: #dc2626;"
+                   GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <Label text="Success:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <Label fx:id="dlrSuccessLabel" text="0" style="-fx-font-weight: bold; -fx-text-fill: #059669;"
+                   GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+            <Label text="Failed:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <Label fx:id="dlrFailedLabel" text="0" style="-fx-font-weight: bold; -fx-text-fill: #dc2626;"
+                   GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+        </GridPane>
+    </VBox>
+</ScrollPane>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.smppulse.ui.controller.TemplateController"
+            fitToWidth="true">
+    <VBox spacing="12">
+        <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+
+        <!-- Message Template -->
+        <Label text="Message Template" styleClass="section-header"/>
+        <GridPane hgap="10" vgap="8">
+            <columnConstraints>
+                <ColumnConstraints minWidth="130" prefWidth="130"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+
+            <Label text="Source Address:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="sourceAddrField"
+                       promptText="Use dynamic placeholders"
+                       GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Dest Address:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextField fx:id="destAddrField"
+                       promptText="Use dynamic placeholders"
+                       GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="Message Text:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <TextArea fx:id="messageTextArea" prefRowCount="3" wrapText="true"
+                      promptText="Message body with optional placeholders"
+                      GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        </GridPane>
+
+        <Separator/>
+
+        <!-- Available Placeholders Reference -->
+        <Label text="Available Placeholders" styleClass="section-header"/>
+        <VBox fx:id="placeholderRefBox" spacing="2" style="-fx-background-color: #2a2a3d; -fx-background-radius: 4; -fx-padding: 8;">
+        </VBox>
+
+        <Separator/>
+
+        <!-- Preview -->
+        <Label text="Resolve Preview" styleClass="section-header"/>
+        <Button text="Resolve Preview" styleClass="button,primary" onAction="#handleResolvePreview" prefWidth="150"/>
+        <VBox fx:id="previewBox" spacing="4" style="-fx-background-color: #16162a; -fx-background-radius: 4; -fx-padding: 10;">
+            <Label fx:id="previewSourceLabel" text="Source: -" style="-fx-font-family: monospace; -fx-text-fill: #059669;"/>
+            <Label fx:id="previewDestLabel" text="Dest: -" style="-fx-font-family: monospace; -fx-text-fill: #d97706;"/>
+            <Label fx:id="previewMessageLabel" text="Message: -" wrapText="true"
+                   style="-fx-font-family: monospace; -fx-text-fill: #a78bfa;"/>
+        </VBox>
+
+        <Separator/>
+
+        <!-- TLV Values -->
+        <Label text="Optional TLV Parameters" styleClass="section-header"/>
+        <HBox spacing="8" alignment="CENTER_LEFT">
+            <TextField fx:id="tlvTagField" promptText="Tag (hex)" prefWidth="100"/>
+            <TextField fx:id="tlvValueField" promptText="Value (supports placeholders)" HBox.hgrow="ALWAYS"/>
+            <Button text="Add" styleClass="button" onAction="#handleAddTlv"/>
+        </HBox>
+        <TableView fx:id="tlvTable" prefHeight="120">
+            <columns>
+                <TableColumn fx:id="tlvTagColumn" text="Tag" prefWidth="100"/>
+                <TableColumn fx:id="tlvValueColumn" text="Value" prefWidth="250"/>
+                <TableColumn fx:id="tlvActionColumn" text="" prefWidth="60"/>
+            </columns>
+        </TableView>
+    </VBox>
+</ScrollPane>
