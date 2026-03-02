@@ -45,12 +45,34 @@ public class SmppSessionWrapper {
     }
 
     public void connect() throws IOException {
+        // Clean up previous session if exists (e.g. during reconnect)
+        if (session != null) {
+            try {
+                session.unbindAndClose();
+            } catch (Exception e) {
+                log.debug("Error closing previous session {} during reconnect", id, e);
+            }
+            session = null;
+        }
+
         setState(SessionEventListener.ConnectionState.CONNECTING);
         try {
             session = new SMPPSession();
             session.setEnquireLinkTimer(config.getEnquireLinkInterval());
             session.setTransactionTimer(config.getResponseTimeout());
             session.setPduProcessorDegree(3);
+
+            // Listen for jSMPP internal state changes (e.g. enquire_link timeout closing the session)
+            session.addSessionStateListener(new SessionStateListener() {
+                @Override
+                public void onStateChange(SessionState newState, SessionState oldState, Session source) {
+                    log.debug("Session {} jSMPP state change: {} -> {}", id, oldState, newState);
+                    if (newState == SessionState.CLOSED && oldState.isBound()) {
+                        log.warn("Session {} closed internally (likely enquire_link timeout), triggering reconnect", id);
+                        setState(SessionEventListener.ConnectionState.DISCONNECTED);
+                    }
+                }
+            });
 
             session.setMessageReceiverListener(new MessageReceiverListener() {
                 @Override
@@ -189,8 +211,11 @@ public class SmppSessionWrapper {
             } catch (Exception e) {
                 log.warn("Error disconnecting session {}", id, e);
             }
+            session = null;
         }
-        setState(SessionEventListener.ConnectionState.DISCONNECTED);
+        if (state != SessionEventListener.ConnectionState.DISCONNECTED) {
+            setState(SessionEventListener.ConnectionState.DISCONNECTED);
+        }
     }
 
     public boolean isConnected() {

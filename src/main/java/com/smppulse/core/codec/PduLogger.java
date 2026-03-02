@@ -35,8 +35,10 @@ public class PduLogger {
 
     private void addRecord(PduRecord record) {
         records.add(record);
-        if (records.size() > MAX_RECORDS) {
-            records.subList(0, records.size() - MAX_RECORDS).clear();
+        // Trim oldest records if over limit — remove one at a time to avoid
+        // ConcurrentModificationException from CopyOnWriteArrayList.subList().clear()
+        while (records.size() > MAX_RECORDS) {
+            records.removeFirst();
         }
         for (Consumer<PduRecord> listener : recordListeners) {
             listener.accept(record);

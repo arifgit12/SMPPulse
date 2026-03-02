@@ -30,6 +30,21 @@ public class DlrFormat {
         };
     }
 
+    public static DlrEntry.DlrStatus fromMessageState(int messageState) {
+        return switch (messageState) {
+            case 0 -> DlrEntry.DlrStatus.PENDING;   // ENROUTE
+            case 1 -> DlrEntry.DlrStatus.DELIVERED;  // DELIVERED
+            case 2 -> DlrEntry.DlrStatus.EXPIRED;    // EXPIRED
+            case 3 -> DlrEntry.DlrStatus.FAILED;     // DELETED
+            case 4 -> DlrEntry.DlrStatus.FAILED;     // UNDELIVERABLE
+            case 5 -> DlrEntry.DlrStatus.PENDING;    // ACCEPTED
+            case 6 -> DlrEntry.DlrStatus.UNKNOWN;    // UNKNOWN
+            case 7 -> DlrEntry.DlrStatus.REJECTED;   // REJECTED
+            case 8 -> DlrEntry.DlrStatus.FAILED;     // SKIPPED
+            default -> DlrEntry.DlrStatus.UNKNOWN;
+        };
+    }
+
     public static String formatDlr(String pattern, String messageId, String submitDate,
                                      String doneDate, String stat) {
         return pattern
